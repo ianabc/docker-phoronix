@@ -1,0 +1,29 @@
+#!/usr/bin/expect -f
+
+set timeout 600
+set systemTime [clock seconds]
+
+#log_user 0
+
+if {[llength $argv] != 0} {
+  send_user "Usage: $argv0\n"
+  exit 1
+}
+
+spawn phoronix-test-suite run-test pts/iozone-1.8.0
+expect "        Record Size:"
+send "4\r"
+expect "        File Size:"
+send "1\r"
+expect "        Disk Test:"
+send "3\r"
+expect "    Would you like to save these test results (Y/n):"
+send "y\r"
+expect "    Enter a name to save these results under:"
+send "$systemTime\r"
+expect "    Enter a unique name to describe this test run / configuration:"
+send "$systemTime\r"
+expect "New Description:"
+send "\r"
+expect "    Would you like to upload the results to OpenBenchmarking.org (Y/n):"
+send "n\r"
